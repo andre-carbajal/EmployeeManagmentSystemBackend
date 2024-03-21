@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: EmployeeManagmentSystem
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/employeemanagersystem?useSSL=false
+    username: root
+    password: root
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+
+server:
+  error:
+    include-stacktrace: never
