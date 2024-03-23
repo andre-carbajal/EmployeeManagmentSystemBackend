@@ -1,8 +1,10 @@
 package net.anvian.employeemanagmentsystem.controller;
 
+import net.anvian.employeemanagmentsystem.exception.NotFoundExeption;
 import net.anvian.employeemanagmentsystem.model.Employee;
 import net.anvian.employeemanagmentsystem.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,5 +24,25 @@ public class EmployeeController {
     @PostMapping("/employees")
     public Employee addEmployee(@RequestBody Employee employee) {
         return employeeRepository.save(employee);
+    }
+
+    @GetMapping("/employees/{id}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new NotFoundExeption("Employee not found with id: " + id));
+
+        return ResponseEntity.ok(employee);
+    }
+
+    @PutMapping("/employees/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails) {
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new NotFoundExeption("Employee not found with id: " + id));
+
+        employee.setFirstName(employeeDetails.getFirstName());
+        employee.setLastName(employeeDetails.getLastName());
+        employee.setEmailId(employeeDetails.getEmailId());
+
+        Employee updatedEmployee = employeeRepository.save(employee);
+
+        return ResponseEntity.ok(updatedEmployee);
     }
 }
