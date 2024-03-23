@@ -32,7 +32,8 @@ The application provides the following features:
 1. Clone the repository
 2. Navigate to the project directory
 3. Update the `src/main/resources/application.yml` file with your MySQL credentials
-4. Run the application using Maven:
+4. Have a MySQL server running with an scheme called `employeemanagersystem`
+5. Run the application using Maven:
 
 ```bash
 mvn spring-boot:run
