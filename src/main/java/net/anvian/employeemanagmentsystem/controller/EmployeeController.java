@@ -1,5 +1,8 @@
 package net.anvian.employeemanagmentsystem.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.transaction.Transactional;
 import net.anvian.employeemanagmentsystem.exception.NotFoundExeption;
 import net.anvian.employeemanagmentsystem.model.Employee;
 import net.anvian.employeemanagmentsystem.repository.EmployeeRepository;
@@ -13,22 +16,36 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/")
+@Tag(name = "Employee", description = "Employee Management")
 public class EmployeeController {
 
     @Autowired
     private EmployeeRepository employeeRepository;
 
     @GetMapping("/employees")
+    @Operation(
+            summary = "Get all employees on a List",
+            description = "Get all employees from the database",
+            tags = {"Employee", "Get"})
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
 
     @PostMapping("/employees")
+    @Transactional
+    @Operation(
+            summary = "Add a new employee",
+            description = "Add a new employee to the database",
+            tags = {"Employee", "Add", "Transaction"})
     public Employee addEmployee(@RequestBody Employee employee) {
         return employeeRepository.save(employee);
     }
 
     @GetMapping("/employees/{id}")
+    @Operation(
+            summary = "Get an employee by id",
+            description = "Get an employee from the database by id",
+            tags = {"Employee", "Get"})
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new NotFoundExeption("Employee not found with id: " + id));
 
@@ -36,6 +53,11 @@ public class EmployeeController {
     }
 
     @PutMapping("/employees/{id}")
+    @Transactional
+    @Operation(
+            summary = "Update an employee by id",
+            description = "Update an employee from the database by id",
+            tags = {"Employee", "Update", "Transaction"})
     public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails) {
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new NotFoundExeption("Employee not found with id: " + id));
 
@@ -49,6 +71,11 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/employees/{id}")
+    @Transactional
+    @Operation(
+            summary = "Delete an employee by id",
+            description = "Delete an employee from the database by id",
+            tags = {"Employee", "Delete", "Transaction"})
     public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new NotFoundExeption("Employee not found with id: " + id));
 
