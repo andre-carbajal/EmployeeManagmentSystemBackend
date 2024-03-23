@@ -50,3 +50,7 @@ The API documentation is available at http://localhost:8080/documentation.
 - GET /api/v1/employees/{id}: Get an employee by ID
 - PUT /api/v1/employees/{id}: Update an employee by ID
 - DELETE /api/v1/employees/{id}: Delete an employee by ID
+
+### Frontend
+
+The frontend for this application is available at this [link](https://github.com/andre-carbajal/EmployeeManagmentSystemFrontend)
